@@ -1,0 +1,26 @@
+name: Sync README
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PennSIVE Repo
+        uses: actions/checkout@v2
+
+      - name: Pull README from Zheng206 Repo
+        run: |
+          curl -o README.md https://raw.githubusercontent.com/Zheng206/ComBatFam_Pipeline/main/README.md
+
+      - name: Commit and Push
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update README from Zheng206/ComBatFam_Pipeline"
+          git push origin main
